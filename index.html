@@ -26,13 +26,14 @@
         }
 
         .container {
-            max-width: 400px;
+            max-width: 450px;
             padding: 30px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.03);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
+            transition: all 0.3s ease;
         }
 
         h1 {
@@ -104,15 +105,46 @@
             border-radius: 6px;
             margin-bottom: 20px;
         }
+
+        .cat-gif {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        #flee-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 100;
+            pointer-events: none; /* Let clicks pass through */
+        }
     </style>
 </head>
 <body>
+
+    <!-- Small message that appears when she tries to click "Yes" -->
+    <div id="flee-message" class="hidden">Nope! Not allowed.</div>
 
     <!-- WINDOW 1: THE TRAP -->
     <div id="window-1" class="container">
         <h1>An Invitation</h1>
         <p>Are you going to go to sleep earlier today? <br><small>(Gehst du heute früher schlafen?)</small></p>
-        <div class="btn-group">
+        
+        <!-- Placeholder for the calculating cat -->
+        <div id="calculating-cat-container" class="hidden">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NidTVmMXgzYzh2amdyNzdrMHRhZXdtZTY3Nm42amxtNWgxc2Z5YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7btPCcdNniyf0ArS/giphy.gif" alt="Calculating Cat" class="cat-gif">
+            <p style="margin-top: 10px; font-size: 0.9rem;">Hmm... analysis indicates you might be lying.</p>
+        }
+        
+        <div class="btn-group" id="btn-group-1">
             <button id="yes-btn">Yes</button>
             <!-- Offset slightly right so it's not directly under the absolute 'Yes' button initially -->
             <button id="no-btn" style="margin-left: 120px;">No</button>
@@ -129,18 +161,38 @@
             <strong>Platform:</strong> Discord (на діскорді)
         </div>
 
+        <p style="margin-bottom: 10px;">Are we doing this? (machen wir das?)</p>
         <button id="final-btn">G</button>
+    </div>
+
+    <!-- WINDOW 3: THE CONFIRMATION (With the Happy Cat) -->
+    <div id="window-3" class="container hidden">
+        <h1>Excellent Choice.</h1>
+        <p>Prepare yourself. It's about to get intense. <br> (Mach dich bereit. Es wird intensiv.)</p>
+        
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3QwdDJxNms0djVnYXoxbmN3cTdsbmZleTNnbGhnNXV2MHpwZ3pyciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Sux34m5V44H/giphy.gif" alt="Happy Cat Drumming" class="cat-gif">
+        
+        <p style="margin-top: 20px;">See you at 00:30!</p>
     </div>
 
     <script>
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
-        const win1 = document.getElementById('window-1');
-        const win2 = document.getElementById('window-2');
+        const fleeMessage = document.getElementById('flee-message');
+        const calcCat = document.getElementById('calculating-cat-container');
+        const btnGroup1 = document.getElementById('btn-group-1');
         const finalBtn = document.getElementById('final-btn');
 
+        const win1 = document.getElementById('window-1');
+        const win2 = document.getElementById('window-2');
+        const win3 = document.getElementById('window-3');
+
+        let fleeCount = 0;
+
         // Function to make the "Yes" button run away
-        function flyAway() {
+        function flyAway(e) {
+            fleeCount++;
+            
             // Get viewport boundaries limiting the movement within reasonable reach but chaotic
             const x = Math.random() * (window.innerWidth - yesBtn.offsetWidth - 40) + 20;
             const y = Math.random() * (window.innerHeight - yesBtn.offsetHeight - 40) + 20;
@@ -149,6 +201,17 @@
             yesBtn.style.position = 'fixed';
             yesBtn.style.left = `${x}px`;
             yesBtn.style.top = `${y}px`;
+
+            // Show a message the first time she tries
+            if (fleeCount === 1) {
+                fleeMessage.classList.remove('hidden');
+                setTimeout(() => fleeMessage.classList.add('hidden'), 2000);
+            }
+            
+            // Show the calculating cat after a few tries
+            if (fleeCount === 3) {
+                calcCat.classList.remove('hidden');
+            }
         }
 
         // Desktop escape
@@ -161,13 +224,17 @@
 
         // Advance to second window
         noBtn.addEventListener('click', () => {
+            // Make sure the "Yes" button is gone
+            yesBtn.classList.add('hidden');
+            
             win1.classList.add('hidden');
             win2.classList.remove('hidden');
         });
 
         // Final Button action
         finalBtn.addEventListener('click', () => {
-            alert("🔥 NOT QUITE MY TEMPO! See you at 00:30.");
+            win2.classList.add('hidden');
+            win3.classList.remove('hidden');
         });
     </script>
 </body>
