@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Invitation</title>
+    <style>
+        :root {
+            --bg-color: #111;
+            --text-color: #fff;
+            --accent-color: #e50914; /* Cinematic Red */
+            --btn-bg: #222;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .movie-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.4rem;
+            display: block;
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+            align-items: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        #yes-btn {
+            background-color: var(--btn-bg);
+            color: #666;
+            position: absolute;
+            z-index: 10;
+        }
+
+        #no-btn, #final-btn {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        #no-btn:hover, #final-btn:hover {
+            background-color: #ddd;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        
+        .meta-info {
+            font-size: 0.95rem;
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WINDOW 1: THE TRAP -->
+    <div id="window-1" class="container">
+        <h1>An Invitation</h1>
+        <p>Are you going to go to sleep earlier today? <br><small>(Gehst du heute früher schlafen?)</small></p>
+        <div class="btn-group">
+            <button id="yes-btn">Yes</button>
+            <!-- Offset slightly right so it's not directly under the absolute 'Yes' button initially -->
+            <button id="no-btn" style="margin-left: 120px;">No</button>
+        </div>
+    </div>
+
+    <!-- WINDOW 2: THE REWARD -->
+    <div id="window-2" class="container hidden">
+        <h1>Yeah, I knew you won't...</h1>
+        <p>so why don't we finally watch <span class="movie-title">Whiplash</span></p>
+        
+        <div class="meta-info">
+            <strong>Time (Uhrzeit):</strong> 00:30 <br>
+            <strong>Platform:</strong> Discord (на діскорді)
+        </div>
+
+        <button id="final-btn">G</button>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const win1 = document.getElementById('window-1');
+        const win2 = document.getElementById('window-2');
+        const finalBtn = document.getElementById('final-btn');
+
+        // Function to make the "Yes" button run away
+        function flyAway() {
+            // Get viewport boundaries limiting the movement within reasonable reach but chaotic
+            const x = Math.random() * (window.innerWidth - yesBtn.offsetWidth - 40) + 20;
+            const y = Math.random() * (window.innerHeight - yesBtn.offsetHeight - 40) + 20;
+            
+            // Switch to fixed positioning so it can escape the container entirely
+            yesBtn.style.position = 'fixed';
+            yesBtn.style.left = `${x}px`;
+            yesBtn.style.top = `${y}px`;
+        }
+
+        // Desktop escape
+        yesBtn.addEventListener('mouseenter', flyAway);
+        // Mobile escape (tap attempt)
+        yesBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents clicking behavior
+            flyAway();
+        });
+
+        // Advance to second window
+        noBtn.addEventListener('click', () => {
+            win1.classList.add('hidden');
+            win2.classList.remove('hidden');
+        });
+
+        // Final Button action
+        finalBtn.addEventListener('click', () => {
+            alert("🔥 NOT QUITE MY TEMPO! See you at 00:30.");
+        });
+    </script>
+</body>
+</html>
