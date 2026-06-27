@@ -33,13 +33,18 @@
             text-align: center;
         }
 
-        container {
+        .container {
             max-width: 450px;
             width: 90%;
-            padding: 30px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.95); /* Bright white card */
-            box-shadow: 0 8px 32px rgba(255, 183, 197, 0.4); /* Pink shadow tint */
+            /* Generous internal spacing (Polsterung) */
+            padding: 35px; 
+            /* Safe margin from the screen edges (Randabstand) */
+            margin: 20px; 
+            border-radius: 16px;
+            /* Solid white background so the text and GIFs are perfectly readable */
+            background: #ffffff; 
+            /* Soft pink glow to blend it with the background theme */
+            box-shadow: 0 10px 25px rgba(255, 183, 197, 0.6); 
             border: 1px solid rgba(255, 255, 255, 1);
             position: relative;
             transition: all 0.3s ease;
