@@ -110,17 +110,13 @@
 
         .cat-gif {
             max-width: 100%;
-            height: 220px;
-            object-fit: contain;
+            height: 200px;
+            object-fit: cover;
             border-radius: 8px;
             margin-top: 15px;
-        }
-
-        /* Styling specifically for the embedded Tenor block wrapper */
-        .embed-wrapper {
-            margin-top: 15px;
-            border-radius: 8px;
-            overflow: hidden;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         #flee-message {
@@ -137,20 +133,21 @@
             pointer-events: none;
         }
     </style>
-    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 </head>
 <body>
 
     <div id="flee-message" class="hidden">Nope! Not allowed.</div>
 
+    <!-- WINDOW 1: THE TRAP -->
     <div id="window-1" class="container">
         <div id="quiz-flow-content">
             <h1>An Invitation</h1>
-            <p>Are you going to go to sleep earlier today? <br><</p>
+            <p>Are you going to go to sleep earlier today? <br></p>
             
             <div id="calculating-cat-container" class="hidden">
-                <img src="https://i.imgur.com/u7q7XbE.gif" alt="Calculating Cat" class="cat-gif">
-                <p style="margin-top: 10px; font-size: 0.9rem;">Hmm... analysis indicates you might be lying.</p>
+                <!-- Bulletproof direct Giphy CDN link -->
+                <img src="https://i.giphy.com/3o7btPCcdNniyf0ArS.gif" alt="Calculating Cat" class="cat-gif">
+                <p style="margin-top: 15px; font-size: 0.9rem;">Hmm... analysis indicates you might be lying.</p>
             </div>
             
             <div class="btn-group" id="btn-group-1">
@@ -159,21 +156,20 @@
             </div>
         </div>
 
+        <!-- HIDDEN WINNER SCREEN (If she clicks YES) -->
         <div id="yes-clicked-content" class="hidden">
             <h1>Wow, you actually clicked it! 😲</h1>
             <p>Unbelievable speed. But nice try...</p>
             
-            <div class="embed-wrapper">
-                <div class="tenor-gif-embed" data-postid="9091438043443803258" data-share-method="host" data-aspect-ratio="0.959839" data-width="100%">
-                    <a href="https://tenor.com/view/cat-hyppy-gif-9091438043443803258">Cat Hyppy GIF</a>
-                </div>
-            </div>
+            <!-- Jumping Cat via Direct Giphy CDN link -->
+            <img src="https://i.giphy.com/7NoNw4pM87Cxi.gif" alt="Jumping Cat" class="cat-gif">
 
             <p style="margin-top: 20px; font-size: 0.95rem;">You still can't escape this invitation though.</p>
             <button id="secret-next-btn" style="margin-top: 10px;">Continue Anyway</button>
         </div>
     </div>
 
+    <!-- WINDOW 2: THE REWARD -->
     <div id="window-2" class="container hidden">
         <h1>Yeah, I knew you won't...</h1>
         <p>so why don't we finally watch <span class="movie-title">Whiplash</span></p>
@@ -183,15 +179,17 @@
             <strong>Platform:</strong> Discord (на діскорді)
         </div>
 
-        <p style="margin-bottom: 10px;">?</p>
+        <p style="margin-bottom: 10px;">soo ur answer BRS?</p>
         <button id="final-btn">G</button>
     </div>
 
+    <!-- WINDOW 3: THE CONFIRMATION -->
     <div id="window-3" class="container hidden">
         <h1>Excellent Choice.</h1>
-        <p>Prepare yourself. It's about to get intense. <br> (Mach dich bereit. Es wird intensiv.)</p>
+        <p>off we go then <br></p>
         
-        <img src="https://media.tenor.com/Fw5vW65qO_oAAAAC/stan-twitter-keploor-yenshire-gif.gif" alt="Excited Cat" class="cat-gif">
+        <!-- Excited Dancing Cat via Direct Giphy CDN link -->
+        <img src="https://i.giphy.com/OS05wAIwIJiOk.gif" alt="Excited Cat" class="cat-gif">
         
         <p style="margin-top: 20px;">See you at 00:30!</p>
     </div>
@@ -234,35 +232,29 @@
             }
         }
 
-        // Flee interactions
         yesBtn.addEventListener('mouseenter', flyAway);
         yesBtn.addEventListener('touchstart', (e) => {
-            // Touchstart handles the evasion, but if she taps fast enough, it can register a click
             flyAway();
         });
 
-        // IF SHE SUCCEEDS IN CLICKING "YES"
         yesBtn.addEventListener('click', () => {
-            yesBtn.style.position = 'static'; // reset button stance
+            yesBtn.style.position = 'static';
             yesBtn.classList.add('hidden');
             quizFlowContent.classList.add('hidden');
             yesClickedContent.classList.remove('hidden');
         });
 
-        // Secret route bypass back to movie invite
         secretNextBtn.addEventListener('click', () => {
             win1.classList.add('hidden');
             win2.classList.remove('hidden');
         });
 
-        // Normal route via "No"
         noBtn.addEventListener('click', () => {
             yesBtn.classList.add('hidden');
             win1.classList.add('hidden');
             win2.classList.remove('hidden');
         });
 
-        // Success sequence finish
         finalBtn.addEventListener('click', () => {
             win2.classList.add('hidden');
             win3.classList.remove('hidden');
