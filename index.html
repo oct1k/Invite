@@ -6,15 +6,23 @@
     <title>An Invitation</title>
     <style>
         :root {
-            --bg-color: #111;
-            --text-color: #fff;
+            --bg-color: #ffeef2; /* Soft Pink Background */
+            --text-color: #333; /* Dark text so it's readable on pink */
             --accent-color: #e50914; /* Cinematic Red */
-            --btn-bg: #222;
+            --btn-bg: #ffd1dc; /* Pastel pink for the yes button */
         }
-
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
+            /* Simple CSS-generated flower/floral geometric pattern */
+            background-image: 
+                radial-gradient(circle at 50% 50%, #ffb7c5 3px, transparent 4px),
+                radial-gradient(circle at 0 0, #ffb7c5 3px, transparent 4px),
+                radial-gradient(circle at 100% 0, #ffb7c5 3px, transparent 4px),
+                radial-gradient(circle at 100% 100%, #ffb7c5 3px, transparent 4px),
+                radial-gradient(circle at 0 100%, #ffb7c5 3px, transparent 4px);
+            background-size: 40px 40px;
             color: var(--text-color);
             margin: 0;
             display: flex;
@@ -25,14 +33,14 @@
             text-align: center;
         }
 
-        .container {
+        container {
             max-width: 450px;
             width: 90%;
             padding: 30px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.95); /* Bright white card */
+            box-shadow: 0 8px 32px rgba(255, 183, 197, 0.4); /* Pink shadow tint */
+            border: 1px solid rgba(255, 255, 255, 1);
             position: relative;
             transition: all 0.3s ease;
             box-sizing: border-box;
